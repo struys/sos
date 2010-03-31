@@ -1,6 +1,0 @@
-(module main scheme
- 
-  (define index
-     (number->string 400))
-  
-  (provide index))

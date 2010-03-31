@@ -19,11 +19,11 @@ REFRESH_SERVLET = '/conf/refresh-servlets'
 def watch(basepath):
 
     def callback(path, isrec):
-		print "modified"
+		#print "modified"
 		conn = httplib.HTTPConnection(DOMAIN)
 		conn.request("GET", REFRESH_SERVLET)
 		r1 = conn.getresponse()
-		print r1.status
+		#print r1.status
 		conn.close()
 
 

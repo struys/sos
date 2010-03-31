@@ -10,12 +10,9 @@
   
   ; start : request -> response
   (define (start initial-request)
-    `(html (head (title "A Test Page"))
-           (body ([bgcolor "white"])
-                 (p "This is a simple module servlet.")
-		 (p ,(third (pregexp-split #rx"/" (url->string (request-uri initial-request)))))
-                 (p ,(fourth (pregexp-split #rx"/" (url->string (request-uri initial-request)))))
-                 (p ,(begin (dynamic-require (build-path (string-append "/Users/kenstruys/sos/servlets/" 
-                                                                         (third (pregexp-split #rx"/" (url->string (request-uri initial-request)))) ".ss")) 
-                                             (string->symbol (fourth (pregexp-split #rx"/" (url->string (request-uri initial-request))))))))))))
-
+    (let* ((uri-split (pregexp-split #rx"/" (url->string (request-uri initial-request))))
+           (method (dynamic-require (build-path (string-append (path->string (current-directory))
+                                                               "../servlets/controllers/" 
+                                                               (third uri-split) ".ss")) 
+                                    (string->symbol (fourth uri-split)))))
+                              (apply method (cddddr uri-split)))))
